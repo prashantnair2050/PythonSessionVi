@@ -1,0 +1,33 @@
+Advanced Python Programming
+Trainer: Prashant Nair
+===========================================================================================================================================================
+
+Agenda
+--------
+Introducing Django
+Understanding Django Project
+Understanding Django Apps
+Working with Views in Django
+
+
+Django is high-level, opensource web framework written in Python.
+
+DRY (Dont Repeat Yourself)
+
+Lab1: Creating blank web project in Django
+==============================================
+
+1. Create a folder named mysite in Desktop
+2. Open VSCode > Terminal
+3. Ensure your present working directory is pointing to the mysite directory in Desktop
+4. Type the following command to create the project
+
+	django-admin startproject mysite
+
+5. Lets now test if the project is working or not. For that we will be spinning a development server. To launch the dev server type the following command:
+
+	python manage.py runserver
+
+Once server is launched, you can access your project by accessing the following link in the browser
+
+	http://127.0.0.1:8000
