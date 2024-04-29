@@ -31,3 +31,61 @@ Lab1: Creating blank web project in Django
 Once server is launched, you can access your project by accessing the following link in the browser
 
 	http://127.0.0.1:8000
+
+
+Lab2: Creating an app in the web project
+=========================================
+
+To create an app run the following command
+
+	python manage.py startapp food
+
+This will create a seperate app which holds the blank framework to create app
+
+
+Lab3: Creating Views for food app
+==================================
+
+Here we will create a new view that displays hello world
+
+1. Go to views.py in food app
+
+2. Write the following code 
+
+from django.shortcuts import render
+from django.http import HttpResponse
+
+def index(request):
+	return HttpResponse("<h1>Hello World! </h1>")
+
+
+3. To make the view accessible we need to link this particular view to a particular URL. This is done by using a file named urls.py. So create urls.py inside food app
+
+4. Write the following code for urls.py (This file is responsible to setup url pattern for accessing index function inside views.py)
+
+
+from django.urls import path
+from . import views
+
+urlpatterns=[
+    path('',views.index, name='index'),
+]
+
+5. Now once url pattern is generated, we need to inform django project that this urls.py exists. To do so we need to attach this to main site
+
+from django.contrib import admin
+from django.urls import path,include
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("food/",include('food.urls')),
+]
+
+6. Now start the server (incase server not running)
+
+	python manage.py runserver
+
+
+7. Try accessing app using the following link the browser
+
+	http://127.0.0.1:8000/food
