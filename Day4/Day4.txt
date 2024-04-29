@@ -61,7 +61,7 @@ def index(request):
 
 3. To make the view accessible we need to link this particular view to a particular URL. This is done by using a file named urls.py. So create urls.py inside food app
 
-4. Write the following code for urls.py (This file is responsible to setup url pattern for accessing index function inside views.py)
+4. Write the following code for urls.py in food app (This file is responsible to setup url pattern for accessing index function inside views.py)
 
 
 from django.urls import path
@@ -72,6 +72,8 @@ urlpatterns=[
 ]
 
 5. Now once url pattern is generated, we need to inform django project that this urls.py exists. To do so we need to attach this to main site
+
+urls.py on mysite
 
 from django.contrib import admin
 from django.urls import path,include
@@ -89,3 +91,104 @@ urlpatterns = [
 7. Try accessing app using the following link the browser
 
 	http://127.0.0.1:8000/food
+
+
+8. Add items page in existing food app
+
+	- inside views.py add logic for items
+
+		def item(request):
+			return HttpResponse("This is item page")
+
+	- inside urls.py in food app, add the url info for item page
+
+		path('item/' , views.item, name="item")
+
+	- Save all changes and check if the link is working
+
+		http://127.0.0.1:8000/food/item
+
+
+This is item page
+
+
+
+
+Lab4: Migrate to craete all system apps and backend
+====================================================
+
+python manage.py migrate
+
+
+Lab5: Create a database table for my food app which will store item information
+==================================================================================
+
+1. Create a new file named models.py inside food app
+
+from django.db import models
+
+class Item(models.Model):
+   
+    item_name = models.CharField(max_length=200)
+    item_desc = models.CharField(max_length=200)
+    item_price = models.IntegerField()
+   
+
+2.  We need to let Django know about this model so that the system can create Item database with relevant fields. To do so we need to add this app information in settings.py. The name of the app is discoverable by accessing apps.py (In this case its FoodConfig)
+
+
+settings.py
+
+INSTALLED_APPS = [
+	food.apps.FoodConfig,
+	...
+]
+
+
+3. Lets inform Django we have made changes in model structure. To do so perform the following command
+
+	python manage.py makemigrations food
+
+  The command will look for changes and incorporate the same. Here Django will create model Item 
+
+4. Now we need to tell Django to create table
+
+	python manage.py sqlmigrate food 0001
+
+5. Now lets execute the command to create table
+
+	python manage.py migrate
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
