@@ -163,10 +163,62 @@ INSTALLED_APPS = [
 
 
 
+Lab6 - Accessing / Adding elements in the database table / Model
+===================================================================
+
+1. Invoke the shell that is linked to the website
+
+	python manage.py shell
+
+2. Perform the following steps
 
 
+from food.models import Item
+
+Item.objects.all()
+
+a = Item(item_name="Pizza", item_desc="Cheesy Pizza", item_price=20)
+
+a.save()
+
+a.id
+
+a.pk
+
+a.item_name
+
+b = Item(item_name="Burger", item_desc="Hamburger", item_price=15)
+
+b.save()
+
+b.item_name
+
+Item.objects.all()
 
 
+Lab7 - Create admin superuser to access Django Admin page
+============================================================
+
+Step1: Create superuser
+
+	python manage.py createsuperuser
+
+Step2: Access Admin page
+
+	http://127.0.0.1:8000/admin
+
+After logging in, you will observe that food app is not registered to admin console. So the next step is to register food app to admin console
+
+Step3: Go to admin.py of food app and add the following code and save it 
+
+from django.contrib import admin
+from .models import Item
+
+# Register your models here.
+
+admin.site.register(Item)
+
+Step4: Refresh admin page and check if food app is accessible.
 
 
 
