@@ -1,0 +1,53 @@
+Advanced Python Programming
+Trainer: Prashant Nair
+===========================================================================================================================================================
+
+Agenda
+--------
+Django Templates
+Django Template Language
+Namespacing and Removing Hardcoded URL
+
+Lab1: Reading data from table in a view
+==========================================
+
+views.py on food app
+====================
+
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import Item
+
+# Create your views here.
+
+def index(request):
+    item_list= Item.objects.all()
+    return HttpResponse(item_list)
+
+def prashant(request):
+    pass
+
+def item(request):
+    return HttpResponse("This is an item page")
+
+
+models.py in food app
+======================
+
+from django.db import models
+
+# Create your models here.
+
+class Item(models.Model):
+
+    def __str__(self):
+        return self.item_name
+
+    item_name= models.CharField(max_length=200) #varchar(200)
+    item_desc=models.CharField(max_length=200) #varchar(200)
+    item_price=models.IntegerField() #int
+
+
+
+
+
