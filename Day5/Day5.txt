@@ -153,7 +153,22 @@ urlpatterns=[
 
 
 
+Demo2 : Fetching relevant record from db object
 
+detail.html
+
+<h1>{{ itemDetails.item_name }}</h1>
+<h2>{{ itemDetails.item_desc }}</h2>
+<h3>{{ itemDetails.item_price }}</h3>
+
+views.py
+
+def detail(request,item_id):
+    item = Item.objects.get(pk=item_id) #select * from item where id=item_id
+    context = {
+        'itemDetails' : item,
+    }
+    return render(request, 'food/detail.html', context)
 
 
 
