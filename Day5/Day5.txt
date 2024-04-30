@@ -205,6 +205,56 @@ index.html
 
 
 
+Assignment
+============
+
+Case Study: Book Library System
+
+Overview
+---------
+The goal of this project is to create a simple web application using Django that allows users to browse through a collection of books. Each book will have details like title, author, publication date, and genre.
+
+
+Objectives
+-----------
+1. Learn how to set up a Django project and application.
+2. Understand and implement Django models to define data structures.
+3. Utilize Django views to handle the business logic and interaction with models.
+4. Use Django templates to render HTML pages that display data from models.
+
+Requirements
+-----------------
+1. Setup a Django Project and App
+2. Create a new Django project named LibraryProject.
+3. Inside this project, create a new Django app named books.
+4. Define Models
+
+In the books app, define a model Book with the following fields:
+title: A string field, for the book's title.
+author: A string field, for the book's author.
+publication_date: A date field, for the date the book was published.
+genre: A string field, for the genre of the book.
+
+5. Migrations
+Run migrations to create the database schema based on the defined model.
+
+6. Create Views
+Create a view to list all books in the database.
+Create a view to display detailed information about a single book.
+
+7. Templates
+
+Create a template for displaying the list of books.
+Create a template for displaying detailed information about a single book.
+
+8. URL Routing
+
+Set up URL patterns for the two views:
+A route for the home page that lists all books.
+A route for book details that displays more detailed information when a book's title is clicked.
+
+
+
 
 
 
