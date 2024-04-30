@@ -119,6 +119,37 @@ index.html
 </html>
 
 
+Lab4: Accessing elements dynamically
+======================================
+
+Demo1: Using variable values from URL
+
+views.py
+
+from django.shortcuts import render,redirect
+from django.http import HttpResponse
+from .models import Item
+from django.template import loader
+
+
+
+def detail(request, item_id):
+	return HttpResponse("This is item no : %s" % item_id)
+
+
+urls.py (food app)
+
+from django.urls import path
+from . import views
+
+urlpatterns=[
+    #http://127.0.0.1:8000/food
+    path('',views.index, name="index"),
+    #http://127.0.0.1:8000/food/items
+    path('item/',views.item, name="items"),
+    #http://127.0.0.1:8000/food/1
+    path('<int:item_id>',views.detail, name="detail")
+]
 
 
 
