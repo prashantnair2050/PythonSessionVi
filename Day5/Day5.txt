@@ -155,6 +155,10 @@ urlpatterns=[
 
 Demo2 : Fetching relevant record from db object
 
+Create a new template html 
+
+templates/food/detail.html
+
 detail.html
 
 <h1>{{ itemDetails.item_name }}</h1>
@@ -172,6 +176,30 @@ def detail(request,item_id):
 
 
 
+lab 5: Create link in home page to access details of each item
+==============================================================
+
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome {{ name }}</title>
+</head>
+<body>
+    <h1>This is a sample page</h1>
+    <ul>
+        {% for message in messages %}
+        <li> <a href="{{ message.id }}">{{message.item_name}} </a> </li>
+    {% endfor %}
+
+    </ul>
+    
+</body>
+</html>
 
 
 
