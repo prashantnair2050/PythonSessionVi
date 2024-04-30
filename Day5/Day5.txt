@@ -51,3 +51,92 @@ class Item(models.Model):
 
 
 
+
+Templates
+===========
+
+DTL ---- Django Template Language
+
+variables =========== {{ variableName }}
+
+Tags ================ {% %}
+
+
+Lab2: Creating templates folder
+==================================
+
+Create templates folder inside food app
+Create food folder inside templates folder
+Add index.html page inside food folder
+
+Modify views.py in food app
+
+def index(request):
+    return render(request, 'food/index.html')
+
+
+Lab3: Creating and using Context Variable
+===========================================
+
+context variable is a dictionary object
+
+views.py
+
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import Item
+
+# Create your views here.
+
+def index(request):
+    context = {
+        'name' : 'Prashant',
+        'messages' : ['Welcome to Django Template Language', ' Test1', 'Test2']
+    }
+    return render(request, 'food/index.html', context)
+
+
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome {{ name }}</title>
+</head>
+<body>
+    <h1>This is a sample page</h1>
+    <ul>
+        {% for message in messages %}
+        <li> {{ message }} </li>
+    {% endfor %}
+
+    </ul>
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
