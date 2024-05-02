@@ -28,6 +28,11 @@ Authentication in Django
 Adding static css file
 =====================================================================
 
+1. Create a folder named static in food app with the following structure
+
+	static/food/style.css
+2. 
+
 style.css
 
 body{
