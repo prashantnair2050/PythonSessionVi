@@ -175,14 +175,14 @@ index.html
     <title>Test</title>
 </head>
 <body>
-{% block body %}
 
-{% for item in item_list %}
+    {% block body %}
+
+{% for item in messages %}
         
-                <a href={{ url 'detail' 'item.id'}}> {{ item.id }} ---  {{ item.item_name }}</a>
+                <a href="{% url 'food:detail' item.id %}"> {{ item.id }} ---  {{ item.item_name }}</a>
                 
  {% endfor %}
-{% endblock %}
 
 </body>
 </html>
