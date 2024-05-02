@@ -354,4 +354,45 @@ def create_item(request):
     return render(request, 'food/item-form.html', {'form': form})
 
 
+Editing the existing (Edit Functionality)
+------------------------------------------
+
+urls.py
+
+from django.urls import path
+from . import views
+
+app_name='food'
+urlpatterns=[
+    path('',views.index, name='index'),
+    path('item/',views.item, name="item"),
+    #/food/1
+    path('<int:item_id>', views.detail, name="detail"),
+    
+    #add items
+    path('add',views.create_item, name="create_item"),
+
+    #Edit
+    path('update/<int:id>/',views.update_item,name="update_item"),
+
+]
+
+views.py
+
+def update_item(request,id):
+    item = Item.objects.get(id=id)
+    form = ItemForm(request.POST or None, instance=item )
+
+    if form.is_valid():
+        form.save()
+        return redirect('food:index')
+    
+    return render(request,'food/item-form.html',{'form':form , 'item':item})
+
+
+Go to location
+
+http://127.0.0.1/food/update/1
+
+Check if it works
 
