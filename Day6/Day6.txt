@@ -396,3 +396,74 @@ http://127.0.0.1/food/update/1
 
 Check if it works
 
+
+Implement Delete Functionality
+================================
+
+urls.py
+
+from django.urls import path
+from . import views
+
+app_name='food'
+urlpatterns=[
+    path('',views.index, name='index'),
+    path('item/',views.item, name="item"),
+    #/food/1
+    path('<int:item_id>', views.detail, name="detail"),
+    
+    #add items
+    path('add',views.create_item, name="create_item"),
+
+    #Edit
+    path('update/<int:id>/',views.update_item,name="update_item"),
+
+    #Delete
+    path('delete/<int:id>' , views.delete_item, name="delete_item"),
+]
+
+views.py
+
+def delete_item(request,id):
+    item = Item.objects.get(id=id)
+    if request.method == 'POST':
+        item.delete()
+        return redirect('food:index')
+    
+    return render(request, 'food/item-delete.html', {'item': item})
+
+
+item-delete.html
+
+<form method="POST">
+
+    {% csrf_token %}
+    <h2>Are you sure you want to delete {{ itemDetails.item_name }}</h2>
+    <button type="submit">Confirm</button>
+</form>
+
+
+detail.html
+
+{% extends 'food/base.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <img height=300 src="{{ itemDetails.item_image }}" class="card"/>
+        </div>
+        <div class="col-md-6">
+            <h1>{{ itemDetails.item_name }}</h1>
+            <h2>{{ itemDetails.item_desc }}</h2>
+            <h3>$ {{ itemDetails.item_price }}</h3>
+            <a href="{% url 'food:delete_item' itemDetails.id %}">Delete</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+
