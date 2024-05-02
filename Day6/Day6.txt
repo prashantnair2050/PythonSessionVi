@@ -287,3 +287,71 @@ detail.html
 </div>
 
 {% endblock %}
+
+
+
+
+
+Forms in Django
+=====================
+
+Adding new item in food menu
+-------------------------------
+
+urls.py (food)
+
+from django.urls import path
+from . import views
+
+app_name='food'
+urlpatterns=[
+    path('',views.index, name='index'),
+    path('item/',views.item, name="item"),
+    #/food/1
+    path('<int:item_id>', views.detail, name="detail"),
+    
+    #add items
+    path('add',views.create_item, name="create_item"),
+
+]
+
+
+forms.py (need to create a new file in food)
+
+from django import forms
+from .models import Item
+
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ['item_name','item_desc','item_price','item_image']
+
+
+item-form.html
+
+{% extends 'food/base.html' %}
+{% block body %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Save</button>
+</form>
+
+{% endblock %}
+
+
+views.py
+
+from .forms import ItemForm
+
+def create_item(request):
+    form = ItemForm(request.POST or None)
+
+    if form.is_valid():
+        form.save()
+        return redirect('food:index')
+    
+    return render(request, 'food/item-form.html', {'form': form})
+
+
+
