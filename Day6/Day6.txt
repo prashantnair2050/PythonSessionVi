@@ -1,0 +1,58 @@
+Advanced Python Dev
+Trainer: Prashant Nair
+======================================================================================================================================
+
+Agenda
+------
+
+Removal of Hard coded URL
+Adding static files (e.g. css)
+Working with Nav Bar
+Creating a Base Template
+Adding Image Field to Model and Template
+Creating Forms in Django
+	- Add new items
+	- Editing existing items
+	- Deleting items
+Authentication in Django
+	- Creating Registration Form
+	- Adding Success Message
+	- Saving Data from registration form
+	- Customizing Registration form
+	- Logging in Users
+	- Redirect RegisteredUsers
+	- Logout Functionality
+
+
+
+Adding static css file
+=====================================================================
+
+style.css
+
+body{
+    background-color: lightyellow;
+}
+
+index.html 
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+       <link rel="stylesheet" href="{% static 'food\style.css' %}">
+
+    <title>Test</title>
+</head>
+<body>
+
+ {% for item in item_list %}
+        
+                <a href={{ url 'detail' 'item.id'}}> {{ item.id }} ---  {{ item.item_name }}</a>
+                
+ {% endfor %}
+
+
+</body>
+</html>
