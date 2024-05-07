@@ -79,3 +79,38 @@ urlpatterns = [
 Right now we just createed form. We are neither confirming user that its created nor its registered/saved
 
 
+
+Adding Success Message
+========================
+Lets go ahead and apply code to use POST method to save data and display success message
+
+1. Go to views.py in users app
+	
+from django.contrib import messages
+from django.shortcuts import render,redirect
+from django.contrib.auth.forms import UserCreationForm
+
+def register(request):
+	if request.method == 'POST':
+		form = UserCreationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            messages.success(request,f'Welcome {username}, Your account is created.')
+            return redirect('food:index')
+    else:
+        form= UserCreationForm()
+
+    return render(request, 'users/register.html', {'form': form})
+	
+2. Go to base.html in food app and add the following code below nav bar code
+
+{% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+            
+        {% endfor %}
+{% endif %}
+
+
