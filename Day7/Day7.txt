@@ -1,0 +1,81 @@
+Advanced Python Programming
+Trainer: Prashant Nair
+=======================================================================================================================================
+
+Authentication in Django
+	- Creating Registration Form
+	- Adding Success Message
+	- Saving Data from registration form
+	- Customizing Registration form
+	- Logging in Users
+	- Redirecting Registered Users
+	- Logout Functionality
+	- Adding Login Option to Navbar
+	- Restricting Routes (Restricting non registered users to access functionality)
+	- Creating Profile Page properly (Model)
+	- Adding path to upload images
+	- Adding User profile pic
+	- Setting up default profile
+	- Using Django Signals to auto-create profile whenever user gets created
+
+
+
+
+Creating Registration form for User Creation
+=============================================
+
+1. Initially for authentication , it is recommended to create a dedicated app for user authentication and authorization. To create an app, open terminal and perform the following command
+
+	django-admin startapp users
+	
+2. Go to apps.py in users app and copy name of the class (UsersConfig) and register the same in the INSTALLED APPS
+
+	settings.py (in mysite)
+	
+	INSTALLED_APPS = [
+		'users.apps.UsersConfig',
+		...
+	]
+
+3. Create views for User using views.py in Users app. This view will hold inbuilt Authentication Form which shall be used to register the user
+
+	
+from django.shortcuts import render,redirect
+from django.contrib.auth.forms import UserCreationForm
+
+def register(request):
+	form = UserCreationForm()
+	return render(request,'users/register.html',{'form':form})
+	
+
+4. Lets create a template for user reg form. Create templates directory and create register.html as shown in structure below:
+
+	templates/users/register.html
+	
+	<form method="POST">
+		{% csrf_token %}
+		{{ form }}
+		<button type="submit">Signup</button>
+		
+	</form>
+
+5. Create URL pattern directly in mysite's urls.py
+
+urls.py (in mysite)
+
+from django.contrib import admin
+from django.urls import path,include
+from users import views as user_views
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("food/",include('food.urls')),
+    path("register/", user_views.register, name='register'),
+]
+
+6. Visit and check if everything working fine ---------> http://127.0.0.1:8000/register
+
+
+Right now we just createed form. We are neither confirming user that its created nor its registered/saved
+
+
