@@ -241,3 +241,49 @@ templates/users/login.html
 3. Go to settings.py of main app(mysite)
 
 LOGIN_REDIRECT_URL = 'food:index'
+
+
+
+
+
+Redirect RegisteredUsers to LoginPage and Logout Functionality
+=====================================================================
+
+Modify views.py in users app to redirect RegisteredUsers to login functionality
+
+
+from django.shortcuts import render,redirect
+from django.contrib import messages
+from .forms import RegisterForm
+
+# Create your views here.
+
+def register(request):
+    if request.method == 'POST':
+        form=RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request,f'Welcome {username}, Your account is created.')
+            return redirect('login')
+    else:
+        
+        form= RegisterForm()
+    return render(request, 'users/register.html', {'form': form})
+	
+	
+For logout functionality
+
+Create logout template
+
+templates/users/logout.html
+ 
+ <h1>Logged out Successfully</h1>
+ 
+ 
+ 
+http://127.0.0.1:8000/logout
+
+
+
+
