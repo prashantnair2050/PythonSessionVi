@@ -160,4 +160,126 @@ class UsersConfig(AppConfig):
 
 
 
+Django REST framework
+======================================================================
+1. Install django framework using the following command
 
+	pip install djangorestframework
+	pip install docutils==0.16
+
+2. Create a new project
+
+	Create a folder named rest
+	Inside this folder we will create our mysite project and movies app using the following command
+	
+		django-admin startproject mysite
+		
+		django-admin startapp movies
+		
+3. To enable REST framework we need to install the same in our project. This can be done using settings.py
+
+
+		INSTALLED_APPS = [
+			'rest_framework',
+			'movies.apps.MoviesConfig',
+			....
+		]
+		
+4. Lets build models.py for movies
+
+models.py (movies app)
+
+from django.db import models
+
+# Create your models here.
+
+class Moviedata(models.Model):
+    name = models.CharField(max_length=200)
+    duration = models.FloatField()
+    rating = models.FloatField()
+
+
+    def __str__(self) -> str:
+        return self.name
+
+5. Make migrations
+
+	python manage.py makemigrations
+	
+	python manage.py sqlmigrate movies 0001
+	
+	python manage.py migrate
+	
+6. Now we will create a superuser
+
+	python manage.py createsuperuser
+	
+7. Access the admin page (http://127.0.0.1:8000/admin). Note that there is no model visible. So lets add the model in admin.py
+
+
+admin.py (movies)
+
+from django.contrib import admin
+from .models import Moviedata
+
+# Register your models here.
+admin.site.register(Moviedata)
+
+
+8. Refresh and check if its visible. Add one record for an example
+
+Now we will create an API that will display the data and share the data via api 
+
+9. Lets create serializer which is required for data transfer in motion
+
+serializers.py (movies app)
+
+from rest_framework import serializers
+from .models import Moviedata
+
+class MovieSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Moviedata
+        fields = ['id','name','duration','rating']
+		
+		
+		
+10.  Now lets create a view for API that can display the data
+
+views.py (movies app)
+
+from django.shortcuts import render
+from rest_framework import viewsets
+from .serializers import MovieSerializer
+from .models import Moviedata
+
+# Create your views here.
+
+class MovieViewSet(viewsets.ModelViewSet):
+    queryset = Moviedata.objects.all()
+    serializer_class = MovieSerializer
+	
+	
+11. Setup URL pattern for REST. This is done using ROUTER
+
+urls.py (mysite)
+
+from django.contrib import admin
+from django.urls import path,include
+from rest_framework import routers
+from movies.views import MovieViewSet
+
+
+
+router = routers.SimpleRouter()
+router.register('movies', MovieViewSet)
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", include(router.urls)),
+]
+		
+11. Now lets check if the API view is working
+
+http://127.0.0.1:8000/movies
