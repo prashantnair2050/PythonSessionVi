@@ -1,0 +1,13 @@
+Advanced Python
+Trainer: Prashant Nair
+---------------------------------------------------------------------------
+
+Agenda
+
+	- Creating Profile Page properly (Model)
+	- Adding path to upload images
+	- Adding User profile pic
+	- Setting up default profile
+	- Using Django Signals to auto-create profile whenever user gets created
+	- Django REST Framework (APIs)
+
