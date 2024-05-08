@@ -11,3 +11,112 @@ Agenda
 	- Using Django Signals to auto-create profile whenever user gets created
 	- Django REST Framework (APIs)
 
+Creating Profile Page properly (Model)
+========================================
+
+1. In users app go to models.py
+
+
+
+from django.db import models
+from django.contrib.auth.models import User
+
+# Create your models here.
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)  #on_delete will ensure profile gets deleted whenever a user is deleted
+    image = models.ImageField(default='profilepic.jpg', upload_to='profile_pictures')
+    location= models.CharField(max_length=100)
+
+    def __str__(self) -> str:
+        return self.user.username
+		
+		
+2. Make necessary changes in Django app by applying models which are just now created (To create tables at backend)
+
+python manage.py makemigrations
+
+python manage.py migrate
+
+python manage.py runserver
+
+3.CHeck in admin page if profile model is regsitereed
+
+admin.py (in users app)
+
+from django.contrib import admin
+from .models import Profile
+
+# Register your models here.
+admin.site.register(Profile)
+
+
+http://127.0.0.1:8000/admin
+
+
+Adding path to upload images in the profile
+==============================================
+
+Go to admin page add profile
+
+	- Select user
+	- Choose an image button(Select some image from the computer)
+	- Location (City)
+	
+Save it and you will se it will save your data
+
+
+*******IMP --- Check where is the pic saved(To find the same we can check from the backend)****
+
+Open Shell 
+
+python manage.py shell
+
+
+from django.contrib.auth.models import User
+
+user = User.objects.filter(username='admin').first()
+
+user
+
+user.profile
+
+user.profile.image
+
+*******************************************END**************************************************
+
+Lets change the media location. The same shall be done using settings.py via MEDIA ROOT parameter
+
+
+settings.py
+
+from pathlib import Path
+import os
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'pictures')
+MEDIA_URL = '/pictures/'
+
+
+
+Now lets delete the previously created profile and recreate a new profile. You will observe the profile images will be saved in pictures folder
+
+
+Adding User profile pictures in template
+==========================================
+
+1. Update profile template
+
+templates/users/profile.html
+
+<h1>{{ user.username }}</h1>
+<img src="{{ user.profile.image.url }}" />
+
+2. Go to urls.py in mysite and statis file location for image
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns += [
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
