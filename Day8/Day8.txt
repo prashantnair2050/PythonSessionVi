@@ -283,3 +283,93 @@ urlpatterns = [
 11. Now lets check if the API view is working
 
 http://127.0.0.1:8000/movies
+
+12. Lets add an api endpoint ()
+
+---------------------------------------------------------------------------
+models.py (movies app)
+
+from django.db import models
+
+# Create your models here.
+
+class Moviedata(models.Model):
+    name = models.CharField(max_length=200)
+    duration = models.FloatField()
+    rating = models.FloatField()
+	genre = models.CharField(max_length=200, default='action')
+
+
+    def __str__(self) -> str:
+        return self.name
+
+--------------------------------------------------------------------------
+
+	python manage.py makemigrations
+	
+	python manage.py sqlmigrate movies 0002
+	
+	python manage.py migrate
+	
+
+--------------------------------------------------------------------------
+
+views.py (movies app)
+
+from django.shortcuts import render
+from rest_framework import viewsets
+from .serializers import MovieSerializer
+from .models import Moviedata
+
+# Create your views here.
+
+class MovieViewSet(viewsets.ModelViewSet):
+    queryset = Moviedata.objects.all()
+    serializer_class = MovieSerializer
+
+class ActionViewSet(viewsets.ModelViewSet):
+    queryset = Moviedata.objects.filter(genre='action')    
+    serializer_class = MovieSerializer
+	
+	
+--------------------------------------------------------------------------
+
+
+urls.py (mysite)
+
+from django.contrib import admin
+from django.urls import path,include
+from rest_framework import routers
+from movies.views import MovieViewSet
+
+
+
+router = routers.SimpleRouter()
+router.register('movies', MovieViewSet)
+router.register('action', ActionViewSet,  basename='actiondata')
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", include(router.urls)),
+]
+		
+
+
+serializers.py
+
+from rest_framework import serializers
+from .models import Moviedata
+
+class MovieSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Moviedata
+        fields = ['id','name','duration','rating','genre']
+
+-------------------------------------------------------------------------
+
+http://127.0.0.1:8000/action
+
+-------------------------------------------------------------------------
+
+Try to create ComedyViewSet that can show all data with genre comedy
