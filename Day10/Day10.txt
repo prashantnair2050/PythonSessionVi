@@ -7,7 +7,7 @@ mysql -u root -pSimplilearn@123
 
 create database mydjango;
 
-use django;
+use mydjango;
 
 show tables;
 
