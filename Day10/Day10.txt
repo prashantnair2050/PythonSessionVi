@@ -227,3 +227,36 @@ python manage.py runserver
 Step4: To access admin page
 
 http://127.0.0.1:8000/admin
+
+=================================================================================================================
+
+Patient Registration system
+================================
+
+Create a new project and new app named hospital
+Create add staff page with the following credentials
+
+	First Name
+	Last Name
+	Username
+	Password
+	Retype Password
+	
+Create a Add patient form that can add patient information. Following are the fields
+
+	a. Patient First Name
+	b. Patient Last Name
+	b. Username
+	c. Password
+	d. Retype password
+	e. Date of Birth
+	f. Gender(Male/Female/Others)
+
+Create a Retrieval page which can perform the following
+	a. If user is admin, he can access all patients information
+	b. If user is a specific user like patient1, he can access only his information
+
+Create a search page to search patients based on either id,firstname or lastname. Ensure the search page is accessible only by staff and admin and not all patients
+
+
+
