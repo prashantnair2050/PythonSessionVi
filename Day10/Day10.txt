@@ -5,11 +5,11 @@ Using External Database
 
 mysql -u root -pSimplilearn@123
 
-create database mydjango
+create database mydjango;
 
-use django
+use django;
 
-show tables
+show tables;
 
 2. Open VScode and create new Django Project
 
