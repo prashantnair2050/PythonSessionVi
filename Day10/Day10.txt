@@ -5,6 +5,12 @@ Using External Database
 
 mysql -u root -pSimplilearn@123
 
+create database mydjango
+
+use django
+
+show tables
+
 2. Open VScode and create new Django Project
 
 django-admin startproject mysite
@@ -13,4 +19,17 @@ cd mysite
 
 django-admin startapp employeeapp
 
-3. Go to settings.py 
+3. Go to settings.py and edit the following
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mydjango',
+        'USER': 'root',
+        'PASSWORD': 'Simplilearn@123',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }
+}
+
+4. Migrate the project and check the DB if relevant tables are created
