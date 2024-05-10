@@ -1,0 +1,16 @@
+Using External Database
+=========================
+
+1. Open Terminal in Linux and access MySQL using following command
+
+mysql -u root -pSimplilearn@123
+
+2. Open VScode and create new Django Project
+
+django-admin startproject mysite
+
+cd mysite
+
+django-admin startapp employeeapp
+
+3. Go to settings.py 
